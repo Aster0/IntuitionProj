@@ -22,7 +22,6 @@ public class MainActivity extends AppCompatActivity {
         test.put("test", "testtt");
 
         FirebaseFirestore.getInstance().collection("testing").document("test").set(test);
-        startActivity(new Intent(this, HomeActivity.class));
         //test commit - Jordy
     }
 }

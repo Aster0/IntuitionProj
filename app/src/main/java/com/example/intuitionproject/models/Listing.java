@@ -1,22 +1,28 @@
 package com.example.intuitionproject.models;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+
 public class Listing {
     private String destinationRegion;
     private String details;
     private String meetupRegion;
-    private String paymentMethod;
+    private double paymentAmount;
     private String pictureUrl;
     private String title;
     private String authorId;
+    private LocalDateTime time;
 
-    public Listing(String destinationRegion, String details, String meetupRegion, String paymentMethod, String pictureUrl, String title, String authorId) {
+    public Listing(String destinationRegion, String details, String meetupRegion, double paymentAmount, String pictureUrl, String title, String authorId, long time) {
         this.destinationRegion = destinationRegion;
         this.details = details;
         this.meetupRegion = meetupRegion;
-        this.paymentMethod = paymentMethod;
+        this.paymentAmount = paymentAmount;
         this.pictureUrl = pictureUrl;
         this.title = title;
         this.authorId = authorId;
+        setTime(time);
     }
 
     public String getDestinationRegion() {
@@ -43,12 +49,12 @@ public class Listing {
         this.meetupRegion = meetupRegion;
     }
 
-    public String getPaymentMethod() {
-        return paymentMethod;
+    public double getPaymentAmount() {
+        return paymentAmount;
     }
 
-    public void setPaymentMethod(String paymentMethod) {
-        this.paymentMethod = paymentMethod;
+    public void setPaymentAmount(Long paymentAmount) {
+        this.paymentAmount = paymentAmount;
     }
 
     public String getPictureUrl() {
@@ -73,5 +79,13 @@ public class Listing {
 
     public void setAuthorId(String authorId) {
         this.authorId = authorId;
+    }
+
+    public LocalDateTime getTime() {
+        return time;
+    }
+
+    public void setTime(Long time) {
+        this.time = Instant.ofEpochMilli(time).atZone(ZoneId.systemDefault()).toLocalDateTime();
     }
 }

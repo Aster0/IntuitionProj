@@ -1,27 +1,39 @@
 package com.example.intuitionproject.adapters;
 
+import android.view.View;
+
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.viewpager2.adapter.FragmentStateAdapter;
+import androidx.viewpager2.widget.ViewPager2;
+
+import com.example.intuitionproject.models.Listing;
+import com.example.intuitionproject.ui.home.HomeFragment;
+import com.example.intuitionproject.ui.home.ViewPagerListing;
 
 import java.util.List;
 
-public class ViewPagerAdapter extends FragmentStatePagerAdapter {
+public class ViewPagerAdapter extends FragmentStateAdapter {
 // TODO implement items class
-    public ViewPagerAdapter(@NonNull FragmentManager fm, int behavior, List<Integer> itemsList) {
-        super(fm, behavior);
+    List<Listing> itemsList;
+    public ViewPagerAdapter(FragmentActivity fa, List<Listing> itemsList) {
+        super(fa);
+        this.itemsList = itemsList;
     }
 
     @NonNull
     @Override
-    public Fragment getItem(int position) {
-        //TODO instantiate our fragment
-        return null;
+    public Fragment createFragment(int position) {
+        return new ViewPagerListing(itemsList.get(position));
     }
 
     @Override
-    public int getCount() {
-        return 0;
+    public int getItemCount() {
+        return itemsList.size();
     }
 }
+
+

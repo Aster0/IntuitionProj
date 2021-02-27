@@ -52,6 +52,8 @@ public class SignUpActivity extends AppCompatActivity {
                 registerUser(email,password, confirmPassword);
             }
         });
+
+
     }
 
     private void registerUser(final String email, String password, String confirmPassword) {

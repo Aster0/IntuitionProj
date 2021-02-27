@@ -115,7 +115,7 @@ public class newRequestActivity extends AppCompatActivity implements IPickResult
 
                             Map<String, String> test = new HashMap<>();
                             long unixTime = System.currentTimeMillis();
-                            test.put("userid", user.getUid());
+                            test.put("userid", user.getEmail());
                             test.put("title",binding.requestNameEditText.getText().toString());
                             test.put("details", binding.requestDetailsEditText.getText().toString());
                             test.put("meetup-region", binding.meetupRegion.getSelectedItem().toString());

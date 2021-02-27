@@ -97,44 +97,48 @@ public class ChatScreen extends AppCompatActivity {
                     public void onSuccess(DocumentSnapshot documentSnapshot1) {
 
 
-
-                        if(documentSnapshot1.get("userid").toString().equals(FirebaseAuth.getInstance().getCurrentUser().getEmail()))
+                        if(targetName.equals(FirebaseAuth.getInstance().getCurrentUser().getEmail())
+                                || FirebaseAuth.getInstance().getCurrentUser().getEmail().equals(documentSnapshot1.get("userid")))
                         {
-                            receiverName = targetName;
-                            requestOwn = true;
+                            if(documentSnapshot1.get("userid").toString().equals(FirebaseAuth.getInstance().getCurrentUser().getEmail()))
+                            {
+                                receiverName = targetName;
+                                requestOwn = true;
+                            }
+                            else
+                            {
+                                receiverName = documentSnapshot1.get("userid").toString();
+                                requestOwn = false;
+                            }
+
+                            System.out.println(documentSnapshot1.get("userid").toString() + " USERID");
+                            System.out.println(FirebaseAuth.getInstance().getCurrentUser().getEmail() + " CURRENT USER");
+
+
+                            TextView username = findViewById(R.id.username);
+                            username.setText(receiverName);
+
+                            TextView productName = findViewById(R.id.productName);
+                            productName.setText(documentSnapshot1.get("title").toString());
+
+                            ImageView productImage = findViewById(R.id.productImage);
+
+                            Picasso.get().load(documentSnapshot1.get("picture-url").toString()).into(productImage);
+
+                            TextView price = findViewById(R.id.price);
+                            price.setText("S$" + documentSnapshot1.get("payment").toString());
+
+                            if(documentSnapshot1.get("accepted_by") != null || !(documentSnapshot1.get("userid").toString().equals(FirebaseAuth.getInstance().getCurrentUser().getEmail())))
+                            {
+                                acceptButton.setVisibility(View.INVISIBLE);
+                            }
+
+                            requestID = documentSnapshot1.getId();
+
+
+                            prepareListeners();
                         }
-                        else
-                        {
-                            receiverName = documentSnapshot1.get("userid").toString();
-                            requestOwn = false;
-                        }
 
-                        System.out.println(documentSnapshot1.get("userid").toString() + " USERID");
-                        System.out.println(FirebaseAuth.getInstance().getCurrentUser().getEmail() + " CURRENT USER");
-
-
-                        TextView username = findViewById(R.id.username);
-                        username.setText(receiverName);
-
-                        TextView productName = findViewById(R.id.productName);
-                        productName.setText(documentSnapshot1.get("title").toString());
-
-                        ImageView productImage = findViewById(R.id.productImage);
-
-                        Picasso.get().load(documentSnapshot1.get("picture-url").toString()).into(productImage);
-
-                        TextView price = findViewById(R.id.price);
-                        price.setText("S$" + documentSnapshot1.get("payment").toString());
-
-                        if(documentSnapshot1.get("accepted_by") != null || !(documentSnapshot1.get("userid").toString().equals(FirebaseAuth.getInstance().getCurrentUser().getEmail())))
-                        {
-                            acceptButton.setVisibility(View.INVISIBLE);
-                        }
-
-                        requestID = documentSnapshot1.getId();
-
-
-                        prepareListeners();
                     }
                 });
             }

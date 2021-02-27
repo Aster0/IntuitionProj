@@ -17,8 +17,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.com.vansuita.pickimage.provider"
@@ -35,6 +33,9 @@
         <activity android:name=".screens.ChatScreen"
             android:windowSoftInputMode="adjustPan"></activity>
         <activity android:name=".newRequestActivity"></activity>
+        <activity android:name=".screens.ChatBrowse"></activity>
+        <activity android:name=".screens.homedashboard.HomeActivity"/>
+        <activity android:name=".ForgotPasswordActivity"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

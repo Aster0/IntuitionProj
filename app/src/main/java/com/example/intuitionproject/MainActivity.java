@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.example.intuitionproject.databinding.ActivityMainBinding;
 import com.example.intuitionproject.screens.ChatBrowse;
+import com.example.intuitionproject.screens.ChatScreen;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         }
+
 
         //FirebaseFirestore.getInstance().collection("testing").document("test").set(test);
         binding.btnSignUpPage.setOnClickListener(new View.OnClickListener() {

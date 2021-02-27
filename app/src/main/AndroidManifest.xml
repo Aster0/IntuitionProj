@@ -30,6 +30,8 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/picker_provider_paths" />
         </provider>
+        <activity android:name=".SignUpActivity"></activity>
+        <activity android:name=".screens.ChatBrowse" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

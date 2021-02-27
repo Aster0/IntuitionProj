@@ -114,7 +114,7 @@ public class newRequestActivity extends AppCompatActivity implements IPickResult
                             Log.d("DownloadUrl", url);
 
                             Map<String, String> test = new HashMap<>();
-                            long unixTime = System.currentTimeMillis() / 1000L;
+                            long unixTime = System.currentTimeMillis();
                             test.put("userid", user.getUid());
                             test.put("title",binding.requestNameEditText.getText().toString());
                             test.put("details", binding.requestDetailsEditText.getText().toString());

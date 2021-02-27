@@ -2,6 +2,9 @@ package com.example.intuitionproject;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Intent;
@@ -26,10 +29,13 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class RequestActivity extends AppCompatActivity {
 
     private ActivityRequestBinding binding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,7 +43,7 @@ public class RequestActivity extends AppCompatActivity {
         View view = binding.getRoot();
         setContentView(view);
 
-        RefreshDatabase();
+
 
         binding.makeRequest.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,51 +52,62 @@ public class RequestActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        getAllListings().observe(this, new Observer<List<Listing>>() {
+            @Override
+            public void onChanged(List<Listing> listings) {
+                binding.requestListView.setAdapter(new RequestListAdapter(listings));
+                binding.requestListView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                binding.requestListView.getAdapter().notifyDataSetChanged();
+            }
+        });
     }
 
-    private void RefreshDatabase() {
-        FirebaseUser auth = FirebaseAuth.getInstance().getCurrentUser();
-        FirebaseFirestore storage = FirebaseFirestore.getInstance();
-
-        final CollectionReference docRef = storage.collection("requests");
-
-        Query requestQuery = docRef.whereEqualTo("userid", auth.getEmail());
-
-        requestQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+    public LiveData<List<Listing>> getAllListings () {
+        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        final MutableLiveData<List<Listing>> listingObservables = new MutableLiveData<>();
+        final ArrayList<Listing> returnList = new ArrayList<>();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        CollectionReference requests = db.collection("requests");
+        requests.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
-                    ArrayList<Listing> listingData = new ArrayList<>();
                     for (QueryDocumentSnapshot document : task.getResult()) {
-                        Log.d("lol", document.getId() + " => " + document.getData());
-
-                        String picture_url = document.get("picture-url").toString();
-
-                        String destination_region = document.get("dest-region").toString();
-                        String meetup_region = document.get("meetup-region").toString();
-                        double payment = Double.parseDouble(document.get("payment").toString());
-                        String title = document.get("title").toString();
-                        String details = document.get("details").toString();
-                        String userid = document.get("userid").toString();
-                        long time = Long.parseLong(document.get("timestamp").toString());
-                        String documentId = document.getId();
-                        listingData.add(new Listing(destination_region, details, meetup_region, payment, picture_url, title, userid, time, documentId));
-                    }
-                    binding.requestListView.setAdapter(new RequestListAdapter(listingData));
-                    binding.requestListView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-                    binding.requestListView.getAdapter().notifyDataSetChanged();
-                } else {
-                    Log.d("error", "Error getting documents: ", task.getException());
+                        if (!document.get("userid").equals(user.getEmail())) continue;
+                        // process the list
+                        Map<String, Object> objectMap = document.getData();
+                        returnList.add(
+                                new Listing(
+                                        objectMap.get("dest-region") == null ? "" : objectMap.get("dest-region").toString(),
+                                        objectMap.get("details") == null ? "" : objectMap.get("details").toString(),
+                                        objectMap.get("meetup-region") == null ? "" : objectMap.get("meetup-region").toString(),
+                                        objectMap.get("payment") == null ? 0 : Double.parseDouble(objectMap.get("payment").toString()),
+                                        objectMap.get("picture-url") == null ? "" : objectMap.get("picture-url").toString(),
+                                        objectMap.get("title") == null ? "" : objectMap.get("title").toString(),
+                                        objectMap.get("userid") == null ? "" : objectMap.get("userid").toString(),
+                                        Long.parseLong(objectMap.get("timestamp").toString()),
+                                        document.getId())
+                        );}
+                    Log.e("returnlist", String.valueOf(returnList.size()));
+                    // tell observers we are done
+                    listingObservables.postValue(returnList);
                 }
             }
         });
+        return listingObservables;
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        if ( binding.requestListView.getAdapter() != null)
-            RefreshDatabase();
-
+        getAllListings().observe(this, new Observer<List<Listing>>() {
+            @Override
+            public void onChanged(List<Listing> listings) {
+                binding.requestListView.setAdapter(new RequestListAdapter(listings));
+                binding.requestListView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                binding.requestListView.getAdapter().notifyDataSetChanged();
+            }
+        });
     }
 }

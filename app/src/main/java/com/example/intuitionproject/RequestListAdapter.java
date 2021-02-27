@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -23,12 +24,13 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class RequestListAdapter extends RecyclerView.Adapter<RequestListAdapter.ViewHolder> {
 
-    private ArrayList<Listing> listings;
+    private List<Listing> listings;
 
-    public RequestListAdapter (ArrayList<Listing> listings) {
+    public RequestListAdapter (List<Listing> listings) {
         this.listings = listings;
     }
     @NonNull

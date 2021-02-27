@@ -2,6 +2,7 @@ package com.example.intuitionproject;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -21,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
         test.put("test", "testtt");
 
         FirebaseFirestore.getInstance().collection("testing").document("test").set(test);
+        startActivity(new Intent(this, HomeActivity.class));
         //test commit - Jordy
     }
 }

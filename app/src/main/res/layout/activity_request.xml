@@ -1,28 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".RequestActivity">
-    <com.google.android.material.textview.MaterialTextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Requests"
-        android:textSize="48dp"
-        android:textAlignment="center">
-    </com.google.android.material.textview.MaterialTextView>
+    tools:context=".screens.homedashboard.requests.RequestsFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/requestListView"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="70"/>
+        android:layout_height="wrap_content" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/makeRequest"
-        android:text="Make new Request"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    </com.google.android.material.button.MaterialButton>
-</LinearLayout>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/new_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_marginBottom="20dp"
+        android:layout_marginEnd="10dp"
+        android:src="@drawable/ic_baseline_add_24"/>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

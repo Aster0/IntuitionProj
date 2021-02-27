@@ -30,6 +30,7 @@ public class HomeFragment extends Fragment {
     FragmentHomeBinding binding;
     private Listing selectedItem;
     ViewPagerAdapter adapter;
+
     public HomeFragment() {
 
     }
@@ -48,56 +49,62 @@ public class HomeFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         BottomSheetBehavior.from(binding.designBottomSheet.getRoot()).setHideable(true);
         BottomSheetBehavior.from(binding.designBottomSheet.getRoot()).setState(BottomSheetBehavior.STATE_HIDDEN);
+        binding.nothingAvailText.setVisibility(View.INVISIBLE);
         // hide so the user cannot see anything
         homeViewModel.getAllListings().observe(getViewLifecycleOwner(), new Observer<List<Listing>>() {
             @Override
             public void onChanged(final List<Listing> listings) {
-                adapter = new ViewPagerAdapter(getActivity(), listings);
-                binding.viewPager.setAdapter(adapter);
-                binding.viewPager.setPageTransformer(new CubeOutPageTransformer());
-                BottomSheetBehavior.from(binding.designBottomSheet.getRoot()).setState(BottomSheetBehavior.STATE_COLLAPSED);
-                BottomSheetBehavior.from(binding.designBottomSheet.getRoot()).setHideable(false);
+                if (listings.size() > 0) {
+                    adapter = new ViewPagerAdapter(getActivity(), listings);
+                    binding.viewPager.setAdapter(adapter);
+                    binding.viewPager.setPageTransformer(new CubeOutPageTransformer());
+                    BottomSheetBehavior.from(binding.designBottomSheet.getRoot()).setState(BottomSheetBehavior.STATE_COLLAPSED);
+                    BottomSheetBehavior.from(binding.designBottomSheet.getRoot()).setHideable(false);
 
-                // register changes in viewpager so we can change the ui
-                binding.viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-                    @Override
-                    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                        super.onPageScrolled(position, positionOffset, positionOffsetPixels);
-                    }
+                    // register changes in viewpager so we can change the ui
+                    binding.viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+                        @Override
+                        public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                            super.onPageScrolled(position, positionOffset, positionOffsetPixels);
+                        }
 
-                    @Override
-                    public void onPageSelected(final int position) {
-                        super.onPageSelected(position);
-                        setBottomSheet(listings.get(position));
+                        @Override
+                        public void onPageSelected(final int position) {
+                            super.onPageSelected(position);
+                            setBottomSheet(listings.get(position));
 
-                    }
+                        }
 
-                    @Override
-                    public void onPageScrollStateChanged(int state) {
-                        super.onPageScrollStateChanged(state);
-                    }
-                });
-                binding.designBottomSheet.expandMenu.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        BottomSheetBehavior.from(binding.designBottomSheet.getRoot()).setState(BottomSheetBehavior.STATE_EXPANDED);
-                    }
-                });
+                        @Override
+                        public void onPageScrollStateChanged(int state) {
+                            super.onPageScrollStateChanged(state);
+                        }
+                    });
+                    binding.designBottomSheet.expandMenu.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            BottomSheetBehavior.from(binding.designBottomSheet.getRoot()).setState(BottomSheetBehavior.STATE_EXPANDED);
+                        }
+                    });
+                } else {
+                    binding.nothingAvailText.setVisibility(View.VISIBLE);
+                }
             }
+
         });
 
 
 //
     }
 
-    public void setBottomSheet(final Listing item){
+    public void setBottomSheet(final Listing item) {
 
         binding.designBottomSheet.itemDesc.setText(item.getDetails());
         binding.designBottomSheet.itemMeetupLocation.setText(item.getMeetupRegion());
         binding.designBottomSheet.itemDestinationLocation.setText(item.getDestinationRegion());
         binding.designBottomSheet.itemPayoutAmount.setText(NumberFormat.getCurrencyInstance(Locale.getDefault()).format(item.getPaymentAmount()));
         binding.designBottomSheet.itemTitle.setText(item.getTitle());
-        if(item.getChatId() != null){
+        if (item.getChatId() != null) {
             // if chat id eixsts, open chat activity with it
             binding.designBottomSheet.chatWithButton.setText("View Chat");
             binding.designBottomSheet.chatWithButton.setOnClickListener(new View.OnClickListener() {
@@ -108,7 +115,7 @@ public class HomeFragment extends Fragment {
                     startActivity(intent);
                 }
             });
-        }else{
+        } else {
             binding.designBottomSheet.chatWithButton.setText("Chat");
             binding.designBottomSheet.chatWithButton.setOnClickListener(new View.OnClickListener() {
                 @Override

@@ -136,7 +136,7 @@ public class ChatScreen extends AppCompatActivity {
 
                             if(documentSnapshot1.get("accepted_by") != null || !(documentSnapshot1.get("userid").toString().equals(FirebaseAuth.getInstance().getCurrentUser().getEmail())))
                             {
-                                acceptButton.setVisibility(View.INVISIBLE);
+                                acceptButton.setVisibility(View.GONE);
                             }
 
                             requestID = documentSnapshot1.getId();
@@ -159,7 +159,7 @@ public class ChatScreen extends AppCompatActivity {
         FirebaseFirestore.getInstance().collection("requests").document(requestID).set(accepted, SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                acceptButton.setVisibility(View.INVISIBLE);
+                acceptButton.setVisibility(View.GONE);
             }
         });
     }
@@ -221,39 +221,37 @@ public class ChatScreen extends AppCompatActivity {
 
     public void sendMessage(View view)
     {
+        // don't send empty message
+        if(!chatMessage.getText().toString().isEmpty()) {
+            FirebaseFirestore.getInstance().collection("chats").document(document).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
 
 
-        FirebaseFirestore.getInstance().collection("chats").document(document).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-            @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                    String modifier = "r}"; // not owner of request.
 
 
-                String modifier = "r}"; // not owner of request.
-
-
-
-                if(requestOwn == true)
-                {
-                    modifier = "s}"; // it's the owner of the request
-                }
-
-
-                Map<String, List<String>> test = new HashMap<>();
-
-                replies.add(modifier + chatMessage.getText().toString());
-                test.put("replies", replies);
-
-                FirebaseFirestore.getInstance().collection("chats").document(document).set(test, SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        chatMessage.setText("");
+                    if (requestOwn == true) {
+                        modifier = "s}"; // it's the owner of the request
                     }
-                });
-
-            }
-        });
 
 
+                    Map<String, List<String>> test = new HashMap<>();
+
+                    replies.add(modifier + chatMessage.getText().toString());
+                    test.put("replies", replies);
+
+                    FirebaseFirestore.getInstance().collection("chats").document(document).set(test, SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            chatMessage.setText("");
+                        }
+                    });
+
+                }
+            });
+
+        }
 
 
 

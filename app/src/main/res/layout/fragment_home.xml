@@ -5,7 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".screens.homedashboard.home.HomeFragment">
-
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/nothing_avail_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="40sp"
+        android:text="Nothing available :("
+        android:layout_gravity="center"/>
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/view_pager"
         android:layout_width="match_parent"

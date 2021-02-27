@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -47,7 +48,7 @@ public class RequestsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding.makeRequest.setOnClickListener(new View.OnClickListener() {
+        binding.newFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(requireActivity(), newRequestActivity.class);
@@ -61,6 +62,16 @@ public class RequestsFragment extends Fragment {
                 binding.requestListView.setAdapter(new RequestListAdapter(listings));
                 binding.requestListView.setLayoutManager(new LinearLayoutManager(requireContext()));
                 binding.requestListView.getAdapter().notifyDataSetChanged();
+                // fancy fab action
+                binding.requestListView.addOnScrollListener(new RecyclerView.OnScrollListener(){
+                    @Override
+                    public void onScrolled(RecyclerView recyclerView, int dx, int dy){
+                        if (dy > 0)
+                            binding.newFab.hide();
+                        else if (dy < 0)
+                            binding.newFab.show();
+                    }
+                });
             }
         });
     }

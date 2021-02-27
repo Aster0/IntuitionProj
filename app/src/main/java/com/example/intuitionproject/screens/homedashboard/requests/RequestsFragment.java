@@ -1,7 +1,8 @@
-package com.example.intuitionproject;
+package com.example.intuitionproject.screens.homedashboard.requests;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
@@ -10,10 +11,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
+import com.example.intuitionproject.RequestListAdapter;
 import com.example.intuitionproject.databinding.ActivityRequestBinding;
 import com.example.intuitionproject.models.Listing;
+import com.example.intuitionproject.newRequestActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,32 +32,34 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class RequestActivity extends AppCompatActivity {
+public class RequestsFragment extends Fragment {
 
     private ActivityRequestBinding binding;
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        binding = ActivityRequestBinding.inflate(getLayoutInflater(), container, false);
+        return binding.getRoot();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityRequestBinding.inflate(getLayoutInflater());
-        View view = binding.getRoot();
-        setContentView(view);
-
-
 
         binding.makeRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(RequestActivity.this, newRequestActivity.class);
+                Intent intent = new Intent(requireActivity(), newRequestActivity.class);
                 startActivity(intent);
             }
         });
 
-        getAllListings().observe(this, new Observer<List<Listing>>() {
+        getAllListings().observe(getViewLifecycleOwner(), new Observer<List<Listing>>() {
             @Override
             public void onChanged(List<Listing> listings) {
                 binding.requestListView.setAdapter(new RequestListAdapter(listings));
-                binding.requestListView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                binding.requestListView.setLayoutManager(new LinearLayoutManager(requireContext()));
                 binding.requestListView.getAdapter().notifyDataSetChanged();
             }
         });
@@ -94,13 +101,13 @@ public class RequestActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
         getAllListings().observe(this, new Observer<List<Listing>>() {
             @Override
             public void onChanged(List<Listing> listings) {
                 binding.requestListView.setAdapter(new RequestListAdapter(listings));
-                binding.requestListView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+                binding.requestListView.setLayoutManager(new LinearLayoutManager(requireContext()));
                 binding.requestListView.getAdapter().notifyDataSetChanged();
             }
         });

@@ -17,6 +17,7 @@ import com.example.intuitionproject.databinding.ActivityMainBinding;
 
 import com.example.intuitionproject.screens.ChatBrowse;
 import com.example.intuitionproject.screens.ChatScreen;
+import com.example.intuitionproject.screens.homedashboard.HomeActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -38,11 +39,10 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         if (mAuth.getCurrentUser() != null) {
-            Intent intent = new Intent(MainActivity.this, ChatBrowse.class);
+            Intent intent = new Intent(MainActivity.this, HomeActivity.class);
             startActivity(intent);
             finish();
         }
-
 
         //FirebaseFirestore.getInstance().collection("testing").document("test").set(test);
         binding.btnSignUpPage.setOnClickListener(new View.OnClickListener() {
@@ -60,12 +60,6 @@ public class MainActivity extends AppCompatActivity {
                 login(email, passsword);
             }
         });
-
-        if (FirebaseAuth.getInstance().getCurrentUser() != null){
-            Intent intent = new Intent(MainActivity.this, RequestActivity.class);
-            startActivity(intent);
-            finish();
-        }
 
 
         binding.btnForgotPassword.setOnClickListener(new View.OnClickListener() {
@@ -97,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     user = mAuth.getCurrentUser();
-                    Intent intent = new Intent(MainActivity.this, ChatBrowse.class);
+                    Intent intent = new Intent(MainActivity.this, HomeActivity.class);
                     startActivity(intent);
                     finish();
                 }

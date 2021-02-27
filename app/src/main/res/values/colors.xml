@@ -4,4 +4,5 @@
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
     <color name="acceptButton">#004C00</color>
+    <color name="alert">#dd2c00</color>
 </resources>

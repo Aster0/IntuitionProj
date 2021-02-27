@@ -14,8 +14,12 @@ public class Listing {
     private String authorId;
     private LocalDateTime time;
     private String documentId;
+    /**
+     *  null if chat does not exist for listing
+     */
+    private String chatId;
 
-    public Listing(String destinationRegion, String details, String meetupRegion, double paymentAmount, String pictureUrl, String title, String authorId, long time, String documentId) {
+    public Listing(String destinationRegion, String details, String meetupRegion, double paymentAmount, String pictureUrl, String title, String authorId, long time, String documentId, String chatId) {
         this.destinationRegion = destinationRegion;
         this.details = details;
         this.meetupRegion = meetupRegion;
@@ -24,7 +28,16 @@ public class Listing {
         this.title = title;
         this.authorId = authorId;
         this.documentId = documentId;
+        this.chatId = chatId;
         setTime(time);
+    }
+
+    public String getChatId() {
+        return chatId;
+    }
+
+    public void setChatId(String chatId) {
+        this.chatId = chatId;
     }
 
     public String getDestinationRegion() {

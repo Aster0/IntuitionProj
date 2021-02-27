@@ -15,10 +15,10 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/requestListView"
-        android:layout_weight="70"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </androidx.recyclerview.widget.RecyclerView>
+        android:layout_height="0dp"
+        android:layout_weight="70"/>
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/makeRequest"
         android:text="Make new Request"

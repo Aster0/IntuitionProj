@@ -36,7 +36,9 @@ import java.util.List;
 import java.util.Map;
 
 public class ChatScreen extends AppCompatActivity {
-
+    /**
+     * testestest
+     */
     private String document, firstMessage, requestID;
     private Map<String, String> chatLog;
     private boolean chatReady = false, requestOwn;
@@ -54,13 +56,6 @@ public class ChatScreen extends AppCompatActivity {
     private Button acceptButton;
     private List<String> replies;
 
-
-
-
-
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,25 +66,14 @@ public class ChatScreen extends AppCompatActivity {
 
         retrieveInfo();
 
-
-
-
-
-
         MessageAdapter.setMessages(new ArrayList<String>());
 
         buildChat();
-
-
-
     }
 
     public void retrieveInfo()
     {
-        Bundle bundle = this.getIntent().getExtras();
-
-        document = bundle.getString("id");
-
+       document = getIntent().getStringExtra("id");
     }
 
     private void buildChat()
@@ -114,7 +98,7 @@ public class ChatScreen extends AppCompatActivity {
                         if(targetName.equals(FirebaseAuth.getInstance().getCurrentUser().getEmail())
                                 || FirebaseAuth.getInstance().getCurrentUser().getEmail().equals(documentSnapshot1.get("userid")))
                         {
-                            if(documentSnapshot1.get("userid").toString().equals(FirebaseAuth.getInstance().getCurrentUser().getEmail()))
+                            if(!documentSnapshot1.get("userid").toString().equals(FirebaseAuth.getInstance().getCurrentUser().getEmail()))
                             {
                                 receiverName = targetName;
                                 requestOwn = true;
@@ -229,12 +213,6 @@ public class ChatScreen extends AppCompatActivity {
 
     public void sendMessage(View view)
     {
-
-
-
-
-
-
 
 
         FirebaseFirestore.getInstance().collection("chats").document(document).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {

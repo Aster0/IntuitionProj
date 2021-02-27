@@ -12,5 +12,6 @@
     <string name="title_home">Home</string>
     <string name="title_chats">Chats</string>
     <string name="title_profile">Profile</string>
+    <string name="title_requests">Requests</string>
     <string name="chat_btn_title">Chat...</string>
 </resources>

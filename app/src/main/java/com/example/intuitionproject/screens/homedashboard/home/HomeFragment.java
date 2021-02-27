@@ -1,5 +1,6 @@
 package com.example.intuitionproject.screens.homedashboard.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,7 @@ import com.example.intuitionproject.adapters.CubeOutPageTransformer;
 import com.example.intuitionproject.adapters.ViewPagerAdapter;
 import com.example.intuitionproject.databinding.FragmentHomeBinding;
 import com.example.intuitionproject.models.Listing;
+import com.example.intuitionproject.screens.ChatScreen;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 
 import java.text.NumberFormat;
@@ -82,12 +84,41 @@ public class HomeFragment extends Fragment {
 //
     }
 
-    public void setBottomSheet(Listing item){
+    public void setBottomSheet(final Listing item){
         binding.designBottomSheet.itemDesc.setText(item.getDetails());
         binding.designBottomSheet.itemMeetupLocation.setText(item.getMeetupRegion());
         binding.designBottomSheet.itemDestinationLocation.setText(item.getDestinationRegion());
         binding.designBottomSheet.itemPayoutAmount.setText(NumberFormat.getCurrencyInstance(Locale.getDefault()).format(item.getPaymentAmount()));
         binding.designBottomSheet.itemTitle.setText(item.getTitle());
+        if(item.getChatId() != null){
+            // if chat id eixsts, open chat activity with it
+            binding.designBottomSheet.chatWithButton.setText("View Chat");
+            binding.designBottomSheet.chatWithButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(requireActivity(), ChatScreen.class);
+                    intent.putExtra("id", item.getChatId());
+                    startActivity(intent);
+                }
+            });
+        }else{
+            binding.designBottomSheet.chatWithButton.setText("Chat");
+            binding.designBottomSheet.chatWithButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    homeViewModel.createNewChat(item.getDocumentId()).observe(getViewLifecycleOwner(), new Observer<String>() {
+                        @Override
+                        public void onChanged(String s) {
+                            // open activity with new id
+                            Intent intent = new Intent(requireActivity(), ChatScreen.class);
+                            intent.putExtra("id", s);
+                            startActivity(intent);
+                        }
+                    });
+
+                }
+            });
+        }
     }
 
 }

@@ -1,33 +1,118 @@
 package com.example.intuitionproject.screens.homedashboard.chats;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
+import com.example.intuitionproject.R;
+import com.example.intuitionproject.adapters.ChatBrowseAdapter;
+import com.example.intuitionproject.databinding.ActivityChatBrowseBinding;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
-import com.example.intuitionproject.databinding.FragmentChatBinding;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ChatFragment extends Fragment {
 
-    private ChatViewModel chatViewModel;
-    private FragmentChatBinding binding;
-
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
-        chatViewModel =
-                new ViewModelProvider(this).get(ChatViewModel.class);
-        binding = FragmentChatBinding.inflate(getLayoutInflater(), container, false);
+    ActivityChatBrowseBinding binding;
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        binding = ActivityChatBrowseBinding.inflate(getLayoutInflater(), container, false);
         return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+        super.onCreate(savedInstanceState);
+
+        buildChats();
+
 
     }
+
+    private void buildRecycledView()
+    {
+        RecyclerView recyclerView = requireActivity().findViewById(R.id.chatBrowseRecycler);
+
+        ChatBrowseAdapter chatBrowseAdapter = new ChatBrowseAdapter();
+        recyclerView.setAdapter(chatBrowseAdapter);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+    }
+
+
+    private void buildChats()
+    {
+
+        List<DocumentSnapshot> list = new ArrayList<>();
+        ChatBrowseAdapter.setChats(list);
+        FirebaseFirestore.getInstance().collection("requests").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+
+
+
+                for(final DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments())
+                {
+                    if(documentSnapshot.get("userid").equals(FirebaseAuth.getInstance().getCurrentUser().getEmail()))
+                    {
+                        FirebaseFirestore.getInstance().collection("chats").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                            @Override
+                            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+
+
+                                for(DocumentSnapshot documentSnapshot1 : queryDocumentSnapshots.getDocuments())
+                                {
+                                    System.out.println(documentSnapshot1);
+                                    if(documentSnapshot1.get("target").equals(documentSnapshot.getId()))
+                                    {
+
+                                        System.out.println(documentSnapshot1);
+                                        ChatBrowseAdapter.getChats().add(documentSnapshot1);
+                                        buildRecycledView();
+
+                                    }
+                                }
+                            }
+                        });
+                    }
+
+
+
+
+
+                }
+
+
+                FirebaseFirestore.getInstance().collection("chats").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        for(DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments())
+                        {
+                            if(documentSnapshot.get("username").toString().equals(FirebaseAuth.getInstance().getCurrentUser().getEmail()))
+                            {
+                                ChatBrowseAdapter.getChats().add(documentSnapshot);
+                                buildRecycledView();
+                            }
+                        }
+                    }
+                });
+
+            }
+        });
+    }
+
+
 }

@@ -124,15 +124,16 @@ public class newRequestActivity extends AppCompatActivity implements IPickResult
                             Log.d("DownloadUrl", url);
 
                             Map<String, String> test = new HashMap<>();
-
+                            long unixTime = System.currentTimeMillis() / 1000L;
                             test.put("userid", user.getUid());
                             test.put("title",binding.requestNameEditText.getText().toString());
                             test.put("details", binding.requestDetailsEditText.getText().toString());
                             test.put("meetup-region", binding.meetupRegion.getSelectedItem().toString());
                             test.put("dest-region", binding.destinationRegion.getSelectedItem().toString());
                             test.put("payment", binding.deliveryPrice.getText().toString());
-                            test.put("timestamp", Calendar.getInstance().getTime().toString());
+                            test.put("timestamp", String.valueOf(unixTime));
                             test.put("picture-url", url);
+
 
                             FirebaseFirestore.getInstance().collection("requests").document().set(test).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "43358276484",
+    "project_id": "intuition-2569e",
+    "storage_bucket": "intuition-2569e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:43358276484:android:b56811fd6003d5ac69ebd1",
+        "android_client_info": {
+          "package_name": "com.example.intuitionproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "43358276484-fkrfg2b5k23o3mp0ur2fqr6ttk3llvcm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD6xi2eckyFtZO9xBMVfFJYJyZB_LtjMv4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "43358276484-fkrfg2b5k23o3mp0ur2fqr6ttk3llvcm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

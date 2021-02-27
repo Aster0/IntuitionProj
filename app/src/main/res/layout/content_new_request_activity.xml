@@ -25,7 +25,7 @@
 
     <com.google.android.material.textfield.TextInputEditText
         android:minLines="8"
-        android:id="@+id/requestDetails"
+        android:id="@+id/requestDetailsEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Request Details">
@@ -39,6 +39,7 @@
     </com.google.android.material.textview.MaterialTextView>
 
     <androidx.appcompat.widget.AppCompatSpinner
+        android:id="@+id/meetupRegion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     </androidx.appcompat.widget.AppCompatSpinner>
@@ -51,17 +52,20 @@
     </com.google.android.material.textview.MaterialTextView>
 
     <androidx.appcompat.widget.AppCompatSpinner
+        android:id="@+id/destinationRegion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     </androidx.appcompat.widget.AppCompatSpinner>
 
     <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/deliveryPrice"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="numberDecimal"
         android:hint="Delivery Price">
     </com.google.android.material.textfield.TextInputEditText>
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/makeRequest"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Make Request">

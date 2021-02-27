@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".RequestActivity">
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Requests"
+        android:textSize="48dp"
+        android:textAlignment="center">
+    </com.google.android.material.textview.MaterialTextView>
+
+    <ListView
+        android:id="@+id/requestListView"
+        android:layout_weight="70"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </ListView>
+    <com.google.android.material.button.MaterialButton
+        android:text="Make new Request"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </com.google.android.material.button.MaterialButton>
+</LinearLayout>

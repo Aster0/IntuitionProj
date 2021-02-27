@@ -123,6 +123,7 @@ public class newRequestActivity extends AppCompatActivity implements IPickResult
                             test.put("payment", binding.deliveryPrice.getText().toString());
                             test.put("timestamp", String.valueOf(unixTime));
                             test.put("picture-url", url);
+                            test.put("request-accepted", "false");
 
 
                             FirebaseFirestore.getInstance().collection("requests").document().set(test).addOnSuccessListener(new OnSuccessListener<Void>() {

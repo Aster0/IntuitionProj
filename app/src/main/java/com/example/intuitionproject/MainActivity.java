@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.example.intuitionproject.databinding.ActivityMainBinding;
 import com.example.intuitionproject.screens.ChatBrowse;
+import com.example.intuitionproject.screens.ChatScreen;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -82,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     user = mAuth.getCurrentUser();
-                    Intent intent = new Intent(MainActivity.this, newRequestActivity.class);
+                    Intent intent = new Intent(MainActivity.this, ChatScreen.class);
                     startActivity(intent);
                     finish();
                 }

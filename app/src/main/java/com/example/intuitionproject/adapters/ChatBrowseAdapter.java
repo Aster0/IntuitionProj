@@ -35,12 +35,6 @@ public class ChatBrowseAdapter extends RecyclerView.Adapter<ChatBrowseHolder> {
         messageView = inflater.inflate(R.layout.item_chat, parent, false);
 
 
-       /* if(viewType == USER_MESSAGE) {
-            messageView = inflater.inflate(R.layout.item_user_message, parent, false);
-        }
-        else {
-            messageView = inflater.inflate(R.layout.item_developer_message, parent, false);
-        }*/
 
         ChatBrowseHolder chatBrowseHolder = new ChatBrowseHolder(messageView);
 

@@ -9,15 +9,24 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.intuitionproject.R;
+import com.example.intuitionproject.screens.ChatScreen;
+import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class MessageAdapter extends RecyclerView.Adapter<MessageHolder> {
 
-    public static List<String> messages;
+    private static List<String> messages;
 
-    private int USER_MESSAGE = 0, DEVELOPER_MESSAGE = 1;
+    public static List<String> getMessages()
+    {
+        return messages;
+    }
+    public static void setMessages(List<String> array) { messages = array; }
+
+    private int USER_MESSAGE = 0, RECEIVER_MESSAGE = 1;
 
     private String name;
 
@@ -33,11 +42,13 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageHolder> {
         View messageView;
 
 
+
+
         if(viewType == USER_MESSAGE) {
-            messageView = inflater.inflate(R.layout.item_receiving_user_message, parent, false);
+            messageView = inflater.inflate(R.layout.item_logged_user_message, parent, false);
         }
         else {
-            messageView = inflater.inflate(R.layout.item_logged_user_message, parent, false);
+            messageView = inflater.inflate(R.layout.item_receiving_user_message, parent, false);
         }
 
         MessageHolder messageHolder = new MessageHolder(messageView);
@@ -54,30 +65,38 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageHolder> {
 
         System.out.println(position + " POSITION");
 
-//        String message = messages.get(position);
+        String message = messages.get(position);
 
 
-        /*if(message.startsWith("u}"))
+        if(message.startsWith("s}"))
         {
-            name = UserProfile.getUser().getFullName();
+
             return USER_MESSAGE;
         }
         else
         {
-            name = "Developer";
-            return DEVELOPER_MESSAGE;
-        }*/
-        return 0;
+
+            return RECEIVER_MESSAGE;
+        }
+
+
     }
 
 
     @Override
     public void onBindViewHolder(@NonNull MessageHolder holder, int position) {
 
-       // String message = messages.get(position);
-        holder.userMessage.setText("hi");
+        String message = messages.get(position);
+        holder.userMessage.setText(message.replace("s}", "").replace("r}", ""));
 
-        holder.name.setText("John Doe");
+
+        String name;
+        if(messages.get(position).startsWith("s}"))
+            name = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+        else
+            name = "";
+
+        holder.name.setText(name);
 
 
     }
@@ -86,6 +105,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageHolder> {
 
     @Override
     public int getItemCount() {
-        return 5;
+        System.out.println( messages.size());
+        return messages.size();
     }
 }

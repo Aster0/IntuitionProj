@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.example.intuitionproject.ui.home.HomeFragment"
+        android:name="com.example.intuitionproject.screens.homedashboard.home.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_chats"
-        android:name="com.example.intuitionproject.ui.chats.ChatFragment"
+        android:name="com.example.intuitionproject.screens.homedashboard.chats.ChatFragment"
         android:label="@string/title_chats"
         tools:layout="@layout/fragment_chat" />
 
     <fragment
         android:id="@+id/navigation_profile"
-        android:name="com.example.intuitionproject.ui.profile.ProfileFragment"
+        android:name="com.example.intuitionproject.screens.homedashboard.profile.ProfileFragment"
         android:label="@string/title_profile"
         tools:layout="@layout/fragment_profile" />
 </navigation>

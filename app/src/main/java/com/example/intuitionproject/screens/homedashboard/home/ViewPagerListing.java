@@ -1,4 +1,4 @@
-package com.example.intuitionproject.ui.home;
+package com.example.intuitionproject.screens.homedashboard.home;
 
 import androidx.lifecycle.ViewModelProvider;
 
@@ -12,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.intuitionproject.R;
 import com.example.intuitionproject.databinding.ViewPagerListingFragmentBinding;
 import com.example.intuitionproject.models.Listing;
 import com.squareup.picasso.Picasso;

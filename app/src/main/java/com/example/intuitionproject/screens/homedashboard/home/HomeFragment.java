@@ -1,4 +1,4 @@
-package com.example.intuitionproject.ui.home;
+package com.example.intuitionproject.screens.homedashboard.home;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,7 +10,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.viewpager.widget.ViewPager;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.intuitionproject.adapters.CubeOutPageTransformer;

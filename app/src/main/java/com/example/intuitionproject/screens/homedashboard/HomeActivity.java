@@ -1,7 +1,8 @@
-package com.example.intuitionproject;
+package com.example.intuitionproject.screens.homedashboard;
 
 import android.os.Bundle;
 
+import com.example.intuitionproject.R;
 import com.example.intuitionproject.databinding.ActivityHomeBinding;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 

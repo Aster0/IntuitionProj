@@ -1,18 +1,12 @@
 package com.example.intuitionproject.adapters;
 
-import android.view.View;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
-import androidx.viewpager2.widget.ViewPager2;
 
 import com.example.intuitionproject.models.Listing;
-import com.example.intuitionproject.ui.home.HomeFragment;
-import com.example.intuitionproject.ui.home.ViewPagerListing;
+import com.example.intuitionproject.screens.homedashboard.home.ViewPagerListing;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.example.intuitionproject.ui.profile;
+package com.example.intuitionproject.screens.homedashboard.profile;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

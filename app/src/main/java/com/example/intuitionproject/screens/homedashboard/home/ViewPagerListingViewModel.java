@@ -1,4 +1,4 @@
-package com.example.intuitionproject.ui.home;
+package com.example.intuitionproject.screens.homedashboard.home;
 
 import androidx.lifecycle.ViewModel;
 

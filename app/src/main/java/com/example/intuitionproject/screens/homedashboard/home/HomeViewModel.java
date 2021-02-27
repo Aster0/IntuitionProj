@@ -1,4 +1,4 @@
-package com.example.intuitionproject.ui.home;
+package com.example.intuitionproject.screens.homedashboard.home;
 
 import android.util.Log;
 
@@ -9,7 +9,6 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.intuitionproject.models.Listing;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -19,10 +18,6 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import io.reactivex.rxjava3.core.Observable;
-import io.reactivex.rxjava3.subjects.PublishSubject;
-import io.reactivex.rxjava3.subjects.Subject;
 
 public class HomeViewModel extends ViewModel {
 

@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Toast;
 
@@ -41,6 +42,16 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     }
 
     private void resetPassword(String email) {
+        if (email.isEmpty()) {
+            binding.forgotEmail.setError("Email cannot be empty");
+            binding.forgotEmail.requestFocus();
+            return;
+        }
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            binding.forgotEmail.setError("Please enter a valid email");
+            binding.forgotEmail.requestFocus();
+            return;
+        }
         mAuth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {

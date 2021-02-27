@@ -3,12 +3,11 @@ package com.example.intuitionproject;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.intuitionproject.databinding.ActivityMainBinding;
@@ -20,8 +19,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.HashMap;
-import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
@@ -35,11 +32,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(view);
         mAuth = FirebaseAuth.getInstance();
 
-        Map<String, String> test = new HashMap<>();
+        if (mAuth.getCurrentUser() != null) {
+            Intent intent = new Intent(MainActivity.this, ChatBrowse.class);
+            startActivity(intent);
+            finish();
+        }
 
-        test.put("test", "testtt");
-
-        FirebaseFirestore.getInstance().collection("testing").document("test").set(test);
+        //FirebaseFirestore.getInstance().collection("testing").document("test").set(test);
         binding.btnSignUpPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

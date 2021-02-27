@@ -1,5 +1,9 @@
 package com.example.intuitionproject;
 
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
@@ -10,6 +14,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.intuitionproject.databinding.ActivityMainBinding;
+
+import com.example.intuitionproject.screens.ChatBrowse;
+import com.example.intuitionproject.screens.ChatScreen;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -17,8 +24,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.util.HashMap;
-import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
@@ -32,14 +37,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(view);
         mAuth = FirebaseAuth.getInstance();
 
-        Map<String, String> test = new HashMap<>();
+        if (mAuth.getCurrentUser() != null) {
+            Intent intent = new Intent(MainActivity.this, ChatBrowse.class);
+            startActivity(intent);
+            finish();
+        }
 
-        test.put("test", "testtt");
 
-        FirebaseFirestore.getInstance().collection("testing").document("test").set(test);
-        //test commit - Jordy
-
-
+        //FirebaseFirestore.getInstance().collection("testing").document("test").set(test);
         binding.btnSignUpPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -62,6 +67,13 @@ public class MainActivity extends AppCompatActivity {
             finish();
         }
 
+
+        binding.btnForgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this, ForgotPasswordActivity.class));
+            }
+        });
     }
 
     private void login(String email, String password) {
@@ -85,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     user = mAuth.getCurrentUser();
-                    Intent intent = new Intent(MainActivity.this, newRequestActivity.class);
+                    Intent intent = new Intent(MainActivity.this, ChatBrowse.class);
                     startActivity(intent);
                     finish();
                 }

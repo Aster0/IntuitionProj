@@ -22,7 +22,6 @@
         <activity android:name=".RequestActivity"></activity>
         <activity android:name=".screens.ChatBrowse" />
         <activity android:name=".newRequestActivity" />
-
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.com.vansuita.pickimage.provider"
@@ -30,10 +29,20 @@
             android:grantUriPermissions="true"
             tools:replace="android:authorities">
             <meta-data android:name="android.support.FILE_PROVIDER_PATHS" />
+      </provider>
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+              />
         </provider>
+        <activity android:name=".SignUpActivity"></activity>
+        <activity android:name=".screens.ChatBrowse"></activity>
 
-        <activity android:name=".SignUpActivity" />
-        <activity android:name=".screens.ChatBrowse" />
+        <activity android:name=".screens.ChatScreen"
+            android:windowSoftInputMode="adjustPan"></activity>
+        <activity android:name=".newRequestActivity"></activity>
+        <activity android:name=".screens.ChatBrowse"></activity>
+        <activity android:name=".screens.homedashboard.HomeActivity"/>
+        <activity android:name=".ForgotPasswordActivity"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

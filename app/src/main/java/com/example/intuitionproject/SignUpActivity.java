@@ -16,11 +16,16 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class SignUpActivity extends AppCompatActivity {
     private ActivitySignUpBinding binding;
     FirebaseUser user;
     FirebaseAuth mAuth;
+    FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +35,7 @@ public class SignUpActivity extends AppCompatActivity {
         setContentView(view);
 
         mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
 
         binding.btnLoginPage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,9 +52,11 @@ public class SignUpActivity extends AppCompatActivity {
                 registerUser(email,password, confirmPassword);
             }
         });
+
+
     }
 
-    private void registerUser(String email, String password, String confirmPassword) {
+    private void registerUser(final String email, String password, String confirmPassword) {
         if (email.isEmpty()) {
             binding.newEmail.setError("Email required");
             binding.newEmail.requestFocus();
@@ -78,6 +86,10 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
+                    String uid = mAuth.getCurrentUser().getEmail();
+                    Map<String,String> map = new HashMap<>();
+                    map.put("email", uid);
+                    db.collection("users").document(uid).set(map);
                     Toast.makeText(SignUpActivity.this, "Account created!", Toast.LENGTH_SHORT).show();
                     finish();
                 }

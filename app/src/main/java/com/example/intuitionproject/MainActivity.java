@@ -42,8 +42,7 @@ public class MainActivity extends AppCompatActivity {
         FirebaseFirestore.getInstance().collection("testing").document("test").set(test);
         //test commit - Jordy
 
-        Intent intent = new Intent(this, newRequestActivity.class);
-        startActivity(intent);
+
         binding.btnSignUpPage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -83,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     user = mAuth.getCurrentUser();
-                    Intent intent = new Intent(MainActivity.this, ChatBrowse.class);
+                    Intent intent = new Intent(MainActivity.this, newRequestActivity.class);
                     startActivity(intent);
                     finish();
                 }

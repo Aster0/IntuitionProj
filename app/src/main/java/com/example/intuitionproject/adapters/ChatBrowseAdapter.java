@@ -103,6 +103,8 @@ public class ChatBrowseAdapter extends RecyclerView.Adapter<ChatBrowseHolder> {
 
                 holder.chatTitle.setText(title[0]);
                 holder.username.setText(username);
+                List<String> replies = (List<String>)documentSnapshot.getData().get("replies");
+                holder.latestMessage.setText(replies.get(replies.size()-1).substring(2));
                 Picasso.get().load(documentSnapshot1.get("picture-url").toString()).into(holder.chatImage);
             }
         });

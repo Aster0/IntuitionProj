@@ -36,6 +36,7 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.welcomeText.text = "Welcome Back, ${FirebaseAuth.getInstance().currentUser?.email}"
         binding.logoutButton.setOnClickListener {
             MaterialAlertDialogBuilder(requireContext())
                     .setTitle("Are you sure you want to logout?")

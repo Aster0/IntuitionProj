@@ -91,7 +91,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageHolder> {
 
 
         String name;
-        if(messages.get(position).startsWith("s}"))
+        if(!messages.get(position).startsWith("s}"))
             name = FirebaseAuth.getInstance().getCurrentUser().getEmail();
         else
             name = ChatScreen.getReceiverName();

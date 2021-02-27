@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Message;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -54,6 +55,7 @@ public class ChatScreen extends AppCompatActivity {
     private  RecyclerView recyclerView;
     private MessageAdapter messageAdapter;
     private Button acceptButton;
+    private ImageButton exitButton;
     private List<String> replies;
 
     @Override
@@ -63,7 +65,13 @@ public class ChatScreen extends AppCompatActivity {
 
         chatMessage = findViewById(R.id.chat_field);
         acceptButton = findViewById(R.id.acceptBtn);
-
+        exitButton = findViewById(R.id.exit_button);
+        exitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
         retrieveInfo();
 
         MessageAdapter.setMessages(new ArrayList<String>());
@@ -98,7 +106,7 @@ public class ChatScreen extends AppCompatActivity {
                         if(targetName.equals(FirebaseAuth.getInstance().getCurrentUser().getEmail())
                                 || FirebaseAuth.getInstance().getCurrentUser().getEmail().equals(documentSnapshot1.get("userid")))
                         {
-                            if(!documentSnapshot1.get("userid").toString().equals(FirebaseAuth.getInstance().getCurrentUser().getEmail()))
+                            if(documentSnapshot1.get("userid").toString().equals(FirebaseAuth.getInstance().getCurrentUser().getEmail()))
                             {
                                 receiverName = targetName;
                                 requestOwn = true;

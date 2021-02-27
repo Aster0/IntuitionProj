@@ -39,18 +39,24 @@ public class HomeFragment extends Fragment {
         homeViewModel =
                 new ViewModelProvider(this).get(HomeViewModel.class);
         binding = FragmentHomeBinding.inflate(getLayoutInflater(), container, false);
+
         return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        BottomSheetBehavior.from(binding.designBottomSheet.getRoot()).setHideable(true);
+        BottomSheetBehavior.from(binding.designBottomSheet.getRoot()).setState(BottomSheetBehavior.STATE_HIDDEN);
+        // hide so the user cannot see anything
         homeViewModel.getAllListings().observe(getViewLifecycleOwner(), new Observer<List<Listing>>() {
             @Override
             public void onChanged(final List<Listing> listings) {
                 adapter = new ViewPagerAdapter(getActivity(), listings);
                 binding.viewPager.setAdapter(adapter);
                 binding.viewPager.setPageTransformer(new CubeOutPageTransformer());
+                BottomSheetBehavior.from(binding.designBottomSheet.getRoot()).setState(BottomSheetBehavior.STATE_COLLAPSED);
+                BottomSheetBehavior.from(binding.designBottomSheet.getRoot()).setHideable(false);
 
                 // register changes in viewpager so we can change the ui
                 binding.viewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
@@ -85,6 +91,7 @@ public class HomeFragment extends Fragment {
     }
 
     public void setBottomSheet(final Listing item){
+
         binding.designBottomSheet.itemDesc.setText(item.getDetails());
         binding.designBottomSheet.itemMeetupLocation.setText(item.getMeetupRegion());
         binding.designBottomSheet.itemDestinationLocation.setText(item.getDestinationRegion());

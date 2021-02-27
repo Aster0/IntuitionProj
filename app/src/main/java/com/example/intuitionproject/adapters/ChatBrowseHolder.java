@@ -10,12 +10,14 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.intuitionproject.R;
+import com.google.android.material.textview.MaterialTextView;
 
 
 public class ChatBrowseHolder extends RecyclerView.ViewHolder {
 
     public TextView chatTitle;
     public TextView username;
+    public MaterialTextView latestMessage;
     public ImageView chatImage;
     public ConstraintLayout constraintLayout;
 
@@ -32,7 +34,7 @@ public class ChatBrowseHolder extends RecyclerView.ViewHolder {
         username = itemView.findViewById(R.id.chatUsername);
         chatImage = itemView.findViewById(R.id.image_message_profile);
         constraintLayout = itemView.findViewById(R.id.chat);
-
+        latestMessage = itemView.findViewById(R.id.latest_msg);
         context = itemView.getContext();
 
         setListener();

@@ -12,7 +12,7 @@ import java.util.List;
 
 public class ViewPagerAdapter extends FragmentStateAdapter {
 // TODO implement items class
-    List<Listing> itemsList;
+final List<Listing> itemsList;
     public ViewPagerAdapter(FragmentActivity fa, List<Listing> itemsList) {
         super(fa);
         this.itemsList = itemsList;

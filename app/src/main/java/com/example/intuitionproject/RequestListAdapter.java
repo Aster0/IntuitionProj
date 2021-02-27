@@ -1,14 +1,12 @@
 package com.example.intuitionproject;
 
 import android.content.Context;
-import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,19 +14,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.intuitionproject.models.Listing;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.storage.FirebaseStorage;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class RequestListAdapter extends RecyclerView.Adapter<RequestListAdapter.ViewHolder> {
 
-    private List<Listing> listings;
+    private final List<Listing> listings;
 
     public RequestListAdapter (List<Listing> listings) {
         this.listings = listings;
@@ -78,10 +72,10 @@ public class RequestListAdapter extends RecyclerView.Adapter<RequestListAdapter.
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        public TextView requestName;
-        public TextView requestDescription;
-        public ImageView productImage;
-        public ImageButton deleteButton;
+        public final TextView requestName;
+        public final TextView requestDescription;
+        public final ImageView productImage;
+        public final ImageButton deleteButton;
        public ViewHolder(@NonNull View itemView) {
            super(itemView);
            requestName = itemView.findViewById(R.id.requestName);

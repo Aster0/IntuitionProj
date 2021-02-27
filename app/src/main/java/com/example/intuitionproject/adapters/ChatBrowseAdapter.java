@@ -31,7 +31,8 @@ public class ChatBrowseAdapter extends RecyclerView.Adapter<ChatBrowseHolder> {
 
     public static void setChats(List<DocumentSnapshot> array) { chats = array; }
 
-    private int USER_MESSAGE = 0, DEVELOPER_MESSAGE = 1;
+    private final int USER_MESSAGE = 0;
+    private final int DEVELOPER_MESSAGE = 1;
 
     private String name;
 

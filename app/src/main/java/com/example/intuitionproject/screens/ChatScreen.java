@@ -1,13 +1,11 @@
 package com.example.intuitionproject.screens;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.os.Message;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -15,23 +13,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.intuitionproject.R;
-import com.example.intuitionproject.adapters.ChatBrowseAdapter;
 import com.example.intuitionproject.adapters.MessageAdapter;
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
 import com.squareup.picasso.Picasso;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,7 +34,8 @@ public class ChatScreen extends AppCompatActivity {
      */
     private String document, firstMessage, requestID;
     private Map<String, String> chatLog;
-    private boolean chatReady = false, requestOwn;
+    private final boolean chatReady = false;
+    private boolean requestOwn;
     private TextView chatMessage;
     private int count = 0;
 

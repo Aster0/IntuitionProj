@@ -16,10 +16,6 @@ import com.example.intuitionproject.databinding.FragmentLoadingBinding
  */
 class LoadingFragment : Fragment() {
     private lateinit var binding: FragmentLoadingBinding
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {

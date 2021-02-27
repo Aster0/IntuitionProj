@@ -20,7 +20,7 @@ public class ViewPagerListing extends Fragment {
 
     private ViewPagerListingViewModel mViewModel;
     ViewPagerListingFragmentBinding binding;
-    Listing listing;
+    final Listing listing;
     public ViewPagerListing(Listing listing) {
         this.listing = listing;
     }

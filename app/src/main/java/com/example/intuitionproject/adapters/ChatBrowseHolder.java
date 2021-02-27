@@ -15,14 +15,14 @@ import com.google.android.material.textview.MaterialTextView;
 
 public class ChatBrowseHolder extends RecyclerView.ViewHolder {
 
-    public TextView chatTitle;
-    public TextView username;
-    public MaterialTextView latestMessage;
-    public ImageView chatImage;
-    public ConstraintLayout constraintLayout;
+    public final TextView chatTitle;
+    public final TextView username;
+    public final MaterialTextView latestMessage;
+    public final ImageView chatImage;
+    public final ConstraintLayout constraintLayout;
 
 
-    public Context context;
+    public final Context context;
 
     public ChatBrowseHolder(@NonNull View itemView) {
         super(itemView);

@@ -13,7 +13,7 @@ public class Listing {
     private String title;
     private String authorId;
     private LocalDateTime time;
-    private String documentId;
+    private final String documentId;
     /**
      *  null if chat does not exist for listing
      */

@@ -12,7 +12,6 @@ import com.example.intuitionproject.R;
 import com.example.intuitionproject.screens.ChatScreen;
 import com.google.firebase.auth.FirebaseAuth;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -26,7 +25,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageHolder> {
     }
     public static void setMessages(List<String> array) { messages = array; }
 
-    private int USER_MESSAGE = 0, RECEIVER_MESSAGE = 1;
+    private final int USER_MESSAGE = 0;
+    private final int RECEIVER_MESSAGE = 1;
 
     private String name;
 

@@ -29,6 +29,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -63,9 +65,9 @@ public class RequestsFragment extends Fragment {
                 binding.requestListView.setLayoutManager(new LinearLayoutManager(requireContext()));
                 binding.requestListView.getAdapter().notifyDataSetChanged();
                 // fancy fab action
-                binding.requestListView.addOnScrollListener(new RecyclerView.OnScrollListener(){
+                binding.requestListView.addOnScrollListener(new RecyclerView.OnScrollListener() {
                     @Override
-                    public void onScrolled(RecyclerView recyclerView, int dx, int dy){
+                    public void onScrolled(@NotNull RecyclerView recyclerView, int dx, int dy) {
                         if (dy > 0)
                             binding.newFab.hide();
                         else if (dy < 0)
@@ -76,7 +78,7 @@ public class RequestsFragment extends Fragment {
         });
     }
 
-    public LiveData<List<Listing>> getAllListings () {
+    public LiveData<List<Listing>> getAllListings() {
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         final MutableLiveData<List<Listing>> listingObservables = new MutableLiveData<>();
         final ArrayList<Listing> returnList = new ArrayList<>();
@@ -101,7 +103,8 @@ public class RequestsFragment extends Fragment {
                                         objectMap.get("userid") == null ? "" : objectMap.get("userid").toString(),
                                         Long.parseLong(objectMap.get("timestamp").toString()),
                                         document.getId(), null)
-                        );}
+                        );
+                    }
                     Log.e("returnlist", String.valueOf(returnList.size()));
                     // tell observers we are done
                     listingObservables.postValue(returnList);

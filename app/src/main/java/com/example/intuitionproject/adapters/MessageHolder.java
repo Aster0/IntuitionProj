@@ -13,9 +13,9 @@ import com.example.intuitionproject.R;
 
 public class MessageHolder extends RecyclerView.ViewHolder {
 
-    public TextView userMessage;
-    public TextView name;
-    public Context context;
+    public final TextView userMessage;
+    public final TextView name;
+    public final Context context;
 
     public MessageHolder(@NonNull View itemView) {
         super(itemView);

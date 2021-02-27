@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     user = mAuth.getCurrentUser();
-                    Intent intent = new Intent(MainActivity.this, ChatScreen.class);
+                    Intent intent = new Intent(MainActivity.this, ChatBrowse.class);
                     startActivity(intent);
                     finish();
                 }

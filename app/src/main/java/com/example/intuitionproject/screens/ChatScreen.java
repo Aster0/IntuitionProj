@@ -44,6 +44,11 @@ public class ChatScreen extends AppCompatActivity {
     private int count = 0;
 
     private static String receiverName;
+
+    public static String getReceiverName()
+    {
+        return receiverName;
+    }
     private  RecyclerView recyclerView;
     private MessageAdapter messageAdapter;
     private Button acceptButton;
@@ -64,7 +69,8 @@ public class ChatScreen extends AppCompatActivity {
         chatMessage = findViewById(R.id.chat_field);
         acceptButton = findViewById(R.id.acceptBtn);
 
-        document = "cW0i0SRaWKTSWc1hJs2b";
+        retrieveInfo();
+
 
 
 
@@ -75,6 +81,14 @@ public class ChatScreen extends AppCompatActivity {
         buildChat();
 
 
+
+    }
+
+    public void retrieveInfo()
+    {
+        Bundle bundle = this.getIntent().getExtras();
+
+        document = bundle.getString("id");
 
     }
 

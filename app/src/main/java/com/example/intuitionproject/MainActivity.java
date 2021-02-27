@@ -2,8 +2,11 @@ package com.example.intuitionproject;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.intuitionproject.screens.ChatBrowse;
+import com.example.intuitionproject.screens.ChatScreen;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
@@ -22,5 +25,10 @@ public class MainActivity extends AppCompatActivity {
 
         FirebaseFirestore.getInstance().collection("testing").document("test").set(test);
         //test commit - Jordy
+
+
+        Intent intent = new Intent(this, ChatScreen.class);
+
+        startActivity(intent);
     }
 }

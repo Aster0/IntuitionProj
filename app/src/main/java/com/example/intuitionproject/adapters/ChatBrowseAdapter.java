@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.intuitionproject.R;
+
 import java.util.List;
 
 
@@ -28,7 +30,9 @@ public class ChatBrowseAdapter extends RecyclerView.Adapter<ChatBrowseHolder> {
 
 
 
-        View messageView = null;
+        View messageView;
+
+        messageView = inflater.inflate(R.layout.item_chat, parent, false);
 
 
        /* if(viewType == USER_MESSAGE) {
@@ -47,25 +51,13 @@ public class ChatBrowseAdapter extends RecyclerView.Adapter<ChatBrowseHolder> {
 
 
 
-    @Override
-    public int getItemViewType(int position) {
 
-        System.out.println(position + " POSITION");
-
-        String message = messages.get(position);
-
-        return 0;
-
-    }
 
 
     @Override
     public void onBindViewHolder(@NonNull ChatBrowseHolder holder, int position) {
 
-        String message = messages.get(position);
-        holder.userMessage.setText(message.substring(2));
 
-        holder.name.setText(name);
 
 
     }

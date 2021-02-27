@@ -10,8 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class ChatBrowseHolder extends RecyclerView.ViewHolder {
 
-    public TextView userMessage;
-    public TextView name;
+
     public Context context;
 
     public ChatBrowseHolder(@NonNull View itemView) {
@@ -27,12 +26,7 @@ public class ChatBrowseHolder extends RecyclerView.ViewHolder {
 
     public void setListener()
     {
-        userMessage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                System.out.println(getAdapterPosition() + " POS");
-            }
-        });
+
     }
 
 

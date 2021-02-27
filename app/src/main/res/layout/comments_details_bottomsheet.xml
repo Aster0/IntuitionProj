@@ -95,7 +95,7 @@
                     android:layout_height="wrap_content"
                     app:layout_constraintTop_toTopOf="@id/description_icon"
                     app:layout_constraintStart_toEndOf="@id/description_icon"
-                    android:layout_marginStart="4dp"
+                    android:layout_marginStart="10dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     android:layout_marginEnd="24dp"
                     android:text=" Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum consequat arcu quis varius semper. Fusce nisl dui, consequat vel urna nec, egestas pulvinar sapien. Morbi vitae sem nisl. Nam vulputate ac purus laoreet varius. Etiam aliquam felis ut feugiat maximus. Aliquam eleifend id justo dapibus consequat. Sed facilisis placerat leo, eget tincidunt velit feugiat ut. Mauris scelerisque, elit vitae faucibus volutpat, sem diam interdum mi, et lobortis nunc tellus eu lectus. Cras congue massa a volutpat finibus. Donec sagittis semper justo, ut aliquam magna venenatis sit amet. Integer semper nisi nec volutpat efficitur. Aenean ultricies nibh in purus varius lobortis. Nunc in turpis ut dui vehicula viverra. In ac diam nunc. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean a ornare ante, sit amet consectetur metus." />

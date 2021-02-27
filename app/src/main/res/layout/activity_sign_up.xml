@@ -74,12 +74,12 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="29dp"
         android:text="SIGN UP"
-        app:layout_constraintBottom_toTopOf="@+id/btn_Login"
+        app:layout_constraintBottom_toTopOf="@+id/btn_Login_Page"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/btn_Login"
+        android:id="@+id/btn_Login_Page"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="133dp"

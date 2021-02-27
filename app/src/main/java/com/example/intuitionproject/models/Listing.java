@@ -14,12 +14,14 @@ public class Listing {
     private String authorId;
     private LocalDateTime time;
     private final String documentId;
+
+    private String acceptedBy;
     /**
      *  null if chat does not exist for listing
      */
     private String chatId;
 
-    public Listing(String destinationRegion, String details, String meetupRegion, double paymentAmount, String pictureUrl, String title, String authorId, long time, String documentId, String chatId) {
+    public Listing(String destinationRegion, String details, String meetupRegion, double paymentAmount, String pictureUrl, String title, String authorId, long time, String documentId, String chatId, String acceptedBy) {
         this.destinationRegion = destinationRegion;
         this.details = details;
         this.meetupRegion = meetupRegion;
@@ -30,6 +32,7 @@ public class Listing {
         this.documentId = documentId;
         this.chatId = chatId;
         setTime(time);
+        this.acceptedBy = acceptedBy;
     }
 
     public String getChatId() {
@@ -106,5 +109,15 @@ public class Listing {
 
     public void setTime(Long time) {
         this.time = Instant.ofEpochMilli(time).atZone(ZoneId.systemDefault()).toLocalDateTime();
+    }
+
+    public String getAcceptedBy()
+    {
+        return acceptedBy;
+    }
+
+    public void setAcceptedBy(String acceptedBy)
+    {
+        this.acceptedBy = acceptedBy;
     }
 }

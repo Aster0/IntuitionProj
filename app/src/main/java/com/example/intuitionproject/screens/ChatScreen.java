@@ -39,9 +39,9 @@ public class ChatScreen extends AppCompatActivity {
     private TextView chatMessage;
     private int count = 0;
 
-    private static String receiverName;
+    private static List<String> receiverName = new ArrayList<>();
 
-    public static String getReceiverName()
+    public static List<String> getReceiverName()
     {
         return receiverName;
     }
@@ -99,23 +99,33 @@ public class ChatScreen extends AppCompatActivity {
                         if(targetName.equals(FirebaseAuth.getInstance().getCurrentUser().getEmail())
                                 || FirebaseAuth.getInstance().getCurrentUser().getEmail().equals(documentSnapshot1.get("userid")))
                         {
+
+                            TextView username = findViewById(R.id.username);
+
+                            receiverName.add(documentSnapshot1.get("userid").toString()); // index 0
+                            receiverName.add(targetName); // index 1
+
                             if(documentSnapshot1.get("userid").toString().equals(FirebaseAuth.getInstance().getCurrentUser().getEmail()))
                             {
-                                receiverName = targetName;
+
+                                username.setText(receiverName.get(1));
                                 requestOwn = true;
                             }
                             else
                             {
-                                receiverName = documentSnapshot1.get("userid").toString();
+                                //receiverName = documentSnapshot1.get("userid").toString();
+
+                                username.setText(receiverName.get(0));
                                 requestOwn = false;
                             }
+
+
 
                             System.out.println(documentSnapshot1.get("userid").toString() + " USERID");
                             System.out.println(FirebaseAuth.getInstance().getCurrentUser().getEmail() + " CURRENT USER");
 
 
-                            TextView username = findViewById(R.id.username);
-                            username.setText(receiverName);
+
 
                             TextView productName = findViewById(R.id.productName);
                             productName.setText(documentSnapshot1.get("title").toString());
@@ -148,11 +158,12 @@ public class ChatScreen extends AppCompatActivity {
     {
         Map<String, String> accepted = new HashMap<>();
 
-        accepted.put("accepted_by", receiverName);
+        accepted.put("accepted_by", receiverName.get(1));
         FirebaseFirestore.getInstance().collection("requests").document(requestID).set(accepted, SetOptions.merge()).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 acceptButton.setVisibility(View.GONE);
+                sendMessage("The requester has accepted you!");
             }
         });
     }
@@ -240,6 +251,40 @@ public class ChatScreen extends AppCompatActivity {
                             chatMessage.setText("");
                         }
                     });
+
+                }
+            });
+
+        }
+
+
+
+
+    }
+
+    public void sendMessage(final String message)
+    {
+        // don't send empty message
+        if(!chatMessage.getText().toString().isEmpty()) {
+            FirebaseFirestore.getInstance().collection("chats").document(document).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+
+
+                    String modifier = "r}"; // not owner of request.
+
+
+                    if (requestOwn == true) {
+                        modifier = "s}"; // it's the owner of the request
+                    }
+
+
+                    Map<String, List<String>> test = new HashMap<>();
+
+                    replies.add(modifier + message);
+                    test.put("replies", replies);
+
+                    FirebaseFirestore.getInstance().collection("chats").document(document).set(test, SetOptions.merge());
 
                 }
             });

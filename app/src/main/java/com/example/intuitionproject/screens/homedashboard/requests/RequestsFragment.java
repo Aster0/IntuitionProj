@@ -102,7 +102,7 @@ public class RequestsFragment extends Fragment {
                                         objectMap.get("title") == null ? "" : objectMap.get("title").toString(),
                                         objectMap.get("userid") == null ? "" : objectMap.get("userid").toString(),
                                         Long.parseLong(objectMap.get("timestamp").toString()),
-                                        document.getId(), null)
+                                        document.getId(), null, objectMap.get("accepted-by").toString())
                         );
                     }
                     Log.e("returnlist", String.valueOf(returnList.size()));

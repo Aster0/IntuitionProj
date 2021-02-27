@@ -20,13 +20,15 @@ import kotlinx.coroutines.tasks.await
         return snapshots.documents[0].id
     }
     fun getAllRequestsAsync(): LiveData<List<Listing>> = liveData {
+
         val db = FirebaseFirestore.getInstance()
         val returnList = ArrayList<Listing>()
         val snapshots = db.collection("requests").whereNotEqualTo("userid", FirebaseAuth.getInstance().currentUser?.email)
         val result = snapshots.get().await()
         for(i in result.documents){
             val data = i.data?.mapFirebaseToListingsModel(i.id)
-            if(data != null){
+
+            if(data != null && i.data?.get("accepted_by") == null){
                 returnList.add(data)
             }
         }
@@ -43,7 +45,7 @@ import kotlinx.coroutines.tasks.await
                 if (get("title") == null) "" else get("title").toString(),
                 if (get("userid") == null) "" else get("userid").toString(), get("timestamp").toString().toLong(),
                 documentId,
-                isChatExist(documentId))
+                isChatExist(documentId), get("accepted-by").toString())
     }
 
 // emit as livedata

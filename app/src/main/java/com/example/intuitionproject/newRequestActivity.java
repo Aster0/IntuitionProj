@@ -1,19 +1,36 @@
 package com.example.intuitionproject;
 
+import android.app.ProgressDialog;
+import android.content.ContentResolver;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.webkit.MimeTypeMap;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.vansuita.pickimage.bean.PickResult;
 import com.vansuita.pickimage.bundle.PickSetup;
 import com.vansuita.pickimage.dialog.PickImageDialog;
 import com.vansuita.pickimage.listeners.IPickResult;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class newRequestActivity extends AppCompatActivity implements IPickResult {
 
@@ -27,6 +44,9 @@ public class newRequestActivity extends AppCompatActivity implements IPickResult
     Spinner destinationRegion;
     EditText deliveryPrice;
     ImageButton captureImage;
+    Button uploadRequest;
+
+    Uri uri;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +55,8 @@ public class newRequestActivity extends AppCompatActivity implements IPickResult
     }
 
     private void SetUpUI(){
+
+        uploadRequest = findViewById(R.id.makeRequest);
         requestName = findViewById(R.id.requestNameEditText);
         requestDetails = findViewById(R.id.requestDetailsEditText);
         meetupRegion = findViewById(R.id.meetupRegion);
@@ -53,6 +75,54 @@ public class newRequestActivity extends AppCompatActivity implements IPickResult
                 PickImageDialog.build(setup).show(newRequestActivity.this);
             }
         });
+
+        uploadRequest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UploadImage();
+            }
+        });
+    }
+
+    private void UploadImage() {
+        final ProgressDialog pd = new ProgressDialog(this);
+        pd.setMessage("Uploading");
+        pd.show();
+
+        if (uri != null){
+            final StorageReference fileRef = FirebaseStorage.getInstance().getReference()
+                    .child("upload").child(System.currentTimeMillis() + "." + getFileExt(uri));
+
+
+            fileRef.putFile(uri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+                    fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            String url = uri.toString();
+
+                            Log.d("DownloadUrl", url);
+
+                            Map<String, String> test = new HashMap<>();
+
+                            test.put("test", "testtt");
+
+                            FirebaseFirestore.getInstance().collection("testing").document("test").set(test);
+                            pd.dismiss();
+                        }
+                    });
+                }
+            });
+        }
+    }
+
+    private String getFileExt(Uri uri) {
+        ContentResolver cr = getContentResolver();
+
+        MimeTypeMap mimeTypeMap = MimeTypeMap.getSingleton();
+
+        return mimeTypeMap.getExtensionFromMimeType(cr.getType(uri));
     }
 
 
@@ -67,8 +137,8 @@ public class newRequestActivity extends AppCompatActivity implements IPickResult
             //getImageView().setImageURI(r.getUri());
 
             //If you want the Bitmap.
-           captureImage.setImageBitmap(r.getBitmap());
-
+            captureImage.setImageBitmap(r.getBitmap());
+            uri = r.getUri();
             //Image path
             //r.getPath();
         } else {

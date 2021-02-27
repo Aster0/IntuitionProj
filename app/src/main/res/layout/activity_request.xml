@@ -13,13 +13,14 @@
         android:textAlignment="center">
     </com.google.android.material.textview.MaterialTextView>
 
-    <ListView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/requestListView"
         android:layout_weight="70"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    </ListView>
+    </androidx.recyclerview.widget.RecyclerView>
     <com.google.android.material.button.MaterialButton
+        android:id="@+id/makeRequest"
         android:text="Make new Request"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

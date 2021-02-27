@@ -14,6 +14,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.intuitionproject.models.Listing;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.storage.FirebaseStorage;
 import com.squareup.picasso.Picasso;
 
@@ -50,11 +55,19 @@ public class RequestListAdapter extends RecyclerView.Adapter<RequestListAdapter.
     }
 
     public void removeItem(int position) {
-        Log.d("deleted:" , listings.get(position).getTitle());
+        FirebaseFirestore storage = FirebaseFirestore.getInstance();
+        final DocumentReference docRef = storage.collection("requests").document(listings.get(position).getDocumentId());
+
+        docRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+
+            }
+        });
+        Log.d("deleted:" , listings.get(position).getDocumentId());
         listings.remove(position);
         notifyItemRemoved(position);
         // Add whatever you want to do when removing an Item
-
     }
 
     @Override

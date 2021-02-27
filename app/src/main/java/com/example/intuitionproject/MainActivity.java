@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         if (FirebaseAuth.getInstance().getCurrentUser() != null){
-            Intent intent = new Intent(MainActivity.this, newRequestActivity.class);
+            Intent intent = new Intent(MainActivity.this, RequestActivity.class);
             startActivity(intent);
             finish();
         }

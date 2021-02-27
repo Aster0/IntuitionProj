@@ -1,73 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+<ScrollView android:layout_height="wrap_content"
     android:layout_width="match_parent"
-    android:orientation="vertical"
-    android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="New Request"
+            android:textAlignment="center"
+            android:textSize="48dp"
+            android:gravity="center_horizontal">
+        </com.google.android.material.textview.MaterialTextView>
 
-    <com.google.android.material.textview.MaterialTextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="New Request"
-        android:textAlignment="center"
-        android:textSize="48dp"
-        android:gravity="center_horizontal">
-    </com.google.android.material.textview.MaterialTextView>
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/requestNameEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Request Name">
+        </com.google.android.material.textfield.TextInputEditText>
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/requestNameEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Request Name">
-    </com.google.android.material.textfield.TextInputEditText>
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add Image:"
+            >
+        </com.google.android.material.textview.MaterialTextView>
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:minLines="8"
-        android:id="@+id/requestDetailsEditText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Request Details">
-    </com.google.android.material.textfield.TextInputEditText>
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/item_image"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:scaleType="fitXY">
+        </androidx.appcompat.widget.AppCompatImageButton>
 
-    <com.google.android.material.textview.MaterialTextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Meetup Region:"
-        android:textSize="24dp">
-    </com.google.android.material.textview.MaterialTextView>
 
-    <androidx.appcompat.widget.AppCompatSpinner
-        android:id="@+id/meetupRegion"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    </androidx.appcompat.widget.AppCompatSpinner>
 
-    <com.google.android.material.textview.MaterialTextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Destination Region:"
-        android:textSize="24dp">
-    </com.google.android.material.textview.MaterialTextView>
+        <com.google.android.material.textfield.TextInputEditText
+            android:minLines="8"
+            android:id="@+id/requestDetailsEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Request Details">
+        </com.google.android.material.textfield.TextInputEditText>
 
-    <androidx.appcompat.widget.AppCompatSpinner
-        android:id="@+id/destinationRegion"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    </androidx.appcompat.widget.AppCompatSpinner>
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Meetup Region:"
+            android:textSize="24dp">
+        </com.google.android.material.textview.MaterialTextView>
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/deliveryPrice"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="numberDecimal"
-        android:hint="Delivery Price">
-    </com.google.android.material.textfield.TextInputEditText>
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/makeRequest"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Make Request">
-    </com.google.android.material.button.MaterialButton>
-</LinearLayout>
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/meetupRegion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </androidx.appcompat.widget.AppCompatSpinner>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Destination Region:"
+            android:textSize="24dp">
+        </com.google.android.material.textview.MaterialTextView>
+
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/destinationRegion"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </androidx.appcompat.widget.AppCompatSpinner>
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/deliveryPrice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:hint="Delivery Price">
+        </com.google.android.material.textfield.TextInputEditText>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/makeRequest"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Make Request">
+        </com.google.android.material.button.MaterialButton>
+    </LinearLayout>
+</ScrollView>

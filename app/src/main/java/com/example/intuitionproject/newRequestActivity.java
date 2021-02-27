@@ -8,16 +8,11 @@ import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.intuitionproject.databinding.ActivityNewRequestActivityBinding;
 import com.example.intuitionproject.databinding.ContentNewRequestActivityBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -28,24 +23,19 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.google.type.DateTime;
 import com.vansuita.pickimage.bean.PickResult;
 import com.vansuita.pickimage.bundle.PickSetup;
 import com.vansuita.pickimage.dialog.PickImageDialog;
 import com.vansuita.pickimage.listeners.IPickResult;
 
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 public class newRequestActivity extends AppCompatActivity implements IPickResult {
 
     public String[] SingaporeTowns = { "None", "Ang Mo Kio", "Bedok", "Bishan", "Bukit Batok", "Red Hill",
             "Bukit Panjang", "Choa Chu Kang", "Clementi", "Geylang", "Hougang", "Jurong East", "Jurong West",
     "Kallang", "Pasir Ris", "Punggol", "Queenstown", "Sembawanag", "Sengkang", "Serangoon", "Tampines", "Toa Payoh", "Woodlands", "Yishun"};
-
-
 
     private ContentNewRequestActivityBinding binding;
 
@@ -124,15 +114,17 @@ public class newRequestActivity extends AppCompatActivity implements IPickResult
                             Log.d("DownloadUrl", url);
 
                             Map<String, String> test = new HashMap<>();
-
-                            test.put("userid", user.getUid());
+                            long unixTime = System.currentTimeMillis();
+                            test.put("userid", user.getEmail());
                             test.put("title",binding.requestNameEditText.getText().toString());
                             test.put("details", binding.requestDetailsEditText.getText().toString());
                             test.put("meetup-region", binding.meetupRegion.getSelectedItem().toString());
                             test.put("dest-region", binding.destinationRegion.getSelectedItem().toString());
                             test.put("payment", binding.deliveryPrice.getText().toString());
-                            test.put("timestamp", Calendar.getInstance().getTime().toString());
+                            test.put("timestamp", String.valueOf(unixTime));
                             test.put("picture-url", url);
+                            test.put("request-accepted", "false");
+
 
                             FirebaseFirestore.getInstance().collection("requests").document().set(test).addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override

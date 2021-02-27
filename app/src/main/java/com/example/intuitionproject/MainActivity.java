@@ -1,8 +1,8 @@
 package com.example.intuitionproject;
 
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,7 +10,11 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.intuitionproject.databinding.ActivityMainBinding;
+
 import com.example.intuitionproject.screens.ChatBrowse;
 import com.example.intuitionproject.screens.ChatScreen;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -54,9 +58,15 @@ public class MainActivity extends AppCompatActivity {
                 String email = binding.inputEmail.getText().toString().trim();
                 String passsword = binding.inputPassword.getText().toString().trim();
                 login(email, passsword);
-
             }
         });
+
+        if (FirebaseAuth.getInstance().getCurrentUser() != null){
+            Intent intent = new Intent(MainActivity.this, RequestActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
 
         binding.btnForgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -13,8 +13,9 @@ public class Listing {
     private String title;
     private String authorId;
     private LocalDateTime time;
+    private String documentId;
 
-    public Listing(String destinationRegion, String details, String meetupRegion, double paymentAmount, String pictureUrl, String title, String authorId, long time) {
+    public Listing(String destinationRegion, String details, String meetupRegion, double paymentAmount, String pictureUrl, String title, String authorId, long time, String documentId) {
         this.destinationRegion = destinationRegion;
         this.details = details;
         this.meetupRegion = meetupRegion;
@@ -22,6 +23,7 @@ public class Listing {
         this.pictureUrl = pictureUrl;
         this.title = title;
         this.authorId = authorId;
+        this.documentId = documentId;
         setTime(time);
     }
 
@@ -67,6 +69,10 @@ public class Listing {
 
     public String getTitle() {
         return title;
+    }
+
+    public String getDocumentId() {
+        return documentId;
     }
 
     public void setTitle(String title) {

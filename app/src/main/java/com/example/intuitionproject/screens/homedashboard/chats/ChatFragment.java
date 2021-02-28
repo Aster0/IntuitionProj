@@ -64,6 +64,7 @@ public class ChatFragment extends Fragment {
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
 
 
+                final List<DocumentSnapshot> requests = queryDocumentSnapshots.getDocuments();
 
                 for(final DocumentSnapshot documentSnapshot : queryDocumentSnapshots.getDocuments())
                 {
@@ -80,9 +81,12 @@ public class ChatFragment extends Fragment {
                                     if(documentSnapshot1.get("target").equals(documentSnapshot.getId()))
                                     {
 
+
                                         System.out.println(documentSnapshot1);
                                         ChatBrowseAdapter.getChats().add(documentSnapshot1);
                                         buildRecycledView();
+
+
 
 
 
@@ -106,8 +110,21 @@ public class ChatFragment extends Fragment {
                         {
                             if(documentSnapshot.get("username").toString().equals(FirebaseAuth.getInstance().getCurrentUser().getEmail()))
                             {
-                                ChatBrowseAdapter.getChats().add(documentSnapshot);
-                                buildRecycledView();
+                                boolean found = false;
+                                for(DocumentSnapshot request : requests)
+                                {
+                                    if(request.getId().equals(documentSnapshot.get("target")))
+                                    {
+                                        found = true;
+                                    }
+                                }
+
+                                if(found)
+                                {
+                                    ChatBrowseAdapter.getChats().add(documentSnapshot);
+                                    buildRecycledView();
+                                }
+
                             }
                         }
                     }

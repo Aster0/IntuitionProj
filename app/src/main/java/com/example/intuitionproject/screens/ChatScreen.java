@@ -213,6 +213,28 @@ public class ChatScreen extends AppCompatActivity {
                     count++;
                 }
 
+                List<String> chatMessages = (List<String>) value.get("replies");
+
+                String lastMessage;
+
+                if(chatMessages != null) {
+                    lastMessage = chatMessages.get(chatMessages.size() - 1);
+
+                    Map<String, String> details = new HashMap<>();
+
+
+                    if(value.get("username").toString().equals(FirebaseAuth.getInstance().getCurrentUser().getEmail()))
+                    {
+                        details.put("sender_last_text", lastMessage);
+                    }
+                    else
+                    {
+                        details.put("requester_last_text", lastMessage);
+                    }
+                }
+
+
+
                 messageAdapter.notifyDataSetChanged();
                 recyclerView.smoothScrollToPosition(messageAdapter.getItemCount());
 

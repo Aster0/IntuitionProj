@@ -150,22 +150,29 @@ public class ChatBrowseAdapter extends RecyclerView.Adapter<ChatBrowseHolder> {
                 .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot1) {
-                title[0] = documentSnapshot1.get("title").toString();
 
-                String username = documentSnapshot1.get("userid").toString();
-                if(documentSnapshot1.get("userid").toString().equals(FirebaseAuth.getInstance().getCurrentUser().getEmail()))
+                try
                 {
-                    username = documentSnapshot.get("username").toString();
+                    title[0] = documentSnapshot1.get("title").toString();
+
+                    String username = documentSnapshot1.get("userid").toString();
+                    if(documentSnapshot1.get("userid").toString().equals(FirebaseAuth.getInstance().getCurrentUser().getEmail()))
+                    {
+                        username = documentSnapshot.get("username").toString();
+                    }
+
+
+                    holder.chatTitle.setText(title[0]);
+                    holder.username.setText(username);
+                    List<String> replies = (List<String>)documentSnapshot.getData().get("replies");
+
+                    if(replies != null)
+                        holder.latestMessage.setText(replies.get(replies.size()-1).substring(2));
+                    Picasso.get().load(documentSnapshot1.get("picture-url").toString()).into(holder.chatImage);
                 }
 
+                catch(NullPointerException e) {}
 
-                holder.chatTitle.setText(title[0]);
-                holder.username.setText(username);
-                List<String> replies = (List<String>)documentSnapshot.getData().get("replies");
-
-                if(replies != null)
-                    holder.latestMessage.setText(replies.get(replies.size()-1).substring(2));
-                Picasso.get().load(documentSnapshot1.get("picture-url").toString()).into(holder.chatImage);
             }
         });
 

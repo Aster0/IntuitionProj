@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Toast;
@@ -24,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     FirebaseUser user;
     FirebaseAuth mAuth;
+    boolean isValid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,38 +65,76 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, ForgotPasswordActivity.class));
             }
         });
+        binding.inputEmail.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                boolean valid = true;
+                if(editable.toString().isEmpty()){
+                    binding.fieldEmail.setError("Required");
+                    valid = false;
+                }else{
+                    binding.fieldEmail.setError(null);
+                }
+                if (!Patterns.EMAIL_ADDRESS.matcher(editable.toString()).matches()) {
+                    valid = false;
+                    binding.fieldEmail.setError("Please enter a valid email address");
+                    return;
+                }else{
+                    binding.fieldEmail.setError(null);
+                }
+            }
+        });
+        binding.inputPassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                boolean valid = true;
+                if(editable.toString().isEmpty()){
+                    binding.fieldPassword.setError("Required");
+                    valid = false;
+                }else{
+                    binding.fieldPassword.setError(null);
+                }
+                binding.btnLogin.setEnabled(valid);
+            }
+        });
     }
 
     private void login(String email, String password) {
-        if (email.isEmpty()) {
-            binding.inputEmail.setError("Email required");
-            binding.inputEmail.requestFocus();
-            return;
-        }
-        if (password.isEmpty()) {
-            binding.inputPassword.setError("Password required");
-            binding.inputPassword.requestFocus();
-            return;
-        }
-        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            binding.inputEmail.setError("Please enter a valid email address");
-            binding.inputEmail.requestFocus();
-            return;
-        }
-        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()) {
-                    user = mAuth.getCurrentUser();
-                    Intent intent = new Intent(MainActivity.this, HomeActivity.class);
-                    startActivity(intent);
-                    finish();
-                }
-                else {
-                    Toast.makeText(MainActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                }
+        if (!email.isEmpty() && !password.isEmpty() && !Patterns.EMAIL_ADDRESS.matcher(email.toString()).matches()) {
+            mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()) {
+                        user = mAuth.getCurrentUser();
+                        Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        Toast.makeText(MainActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                    }
 
-            }
-        });
+                }
+            });
+        }
     }
 }

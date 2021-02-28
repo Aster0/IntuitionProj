@@ -20,6 +20,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.SetOptions;
 import com.squareup.picasso.Picasso;
 
@@ -37,6 +38,7 @@ public class ChatScreen extends AppCompatActivity {
     private final boolean chatReady = false;
     private boolean requestOwn;
     private TextView chatMessage;
+    private ListenerRegistration listener;
     private int count = 0;
 
     private static List<String> receiverName = new ArrayList<>();
@@ -72,6 +74,14 @@ public class ChatScreen extends AppCompatActivity {
         buildChat();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        System.out.println("gone");
+        listener.remove();
+        receiverName.clear();
+    }
+
     public void retrieveInfo()
     {
        document = getIntent().getStringExtra("id");
@@ -86,6 +96,9 @@ public class ChatScreen extends AppCompatActivity {
 
                 replies = (List<String>) documentSnapshot.get("replies");
 
+                System.out.println(document);
+                System.out.println("DOCUMENT!");
+
 
 
                 final String targetName = documentSnapshot.get("username").toString();
@@ -94,6 +107,8 @@ public class ChatScreen extends AppCompatActivity {
                         .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot1) {
+
+
 
 
                         if(targetName.equals(FirebaseAuth.getInstance().getCurrentUser().getEmail())
@@ -193,7 +208,7 @@ public class ChatScreen extends AppCompatActivity {
     private void prepareListeners() // to make the chat animation smoother
     {
 
-        FirebaseFirestore.getInstance().collection("chats").document(document).addSnapshotListener(new EventListener<DocumentSnapshot>() {
+        listener = FirebaseFirestore.getInstance().collection("chats").document(document).addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
 

@@ -135,7 +135,8 @@ public class ChatScreen extends AppCompatActivity {
                             }
 
 
-                            details.put(userType, chatMessages.get(chatMessages.size() - 1)); // last entry
+                            if(chatMessages != null)
+                                details.put(userType, chatMessages.get(chatMessages.size() - 1)); // last entry
                             System.out.println(details);
                             System.out.println("DETAILS!");
 

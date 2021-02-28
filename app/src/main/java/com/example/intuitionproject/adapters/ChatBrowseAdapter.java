@@ -111,20 +111,23 @@ public class ChatBrowseAdapter extends RecyclerView.Adapter<ChatBrowseHolder> {
         }
         catch (NullPointerException e) { lastTextFound = true; }
 
-
-        for(String message : chatMessages)
+        if(chatMessages != null)
         {
-            System.out.println(lastText);
-            System.out.println(message);
-            if(message.equals(lastText))
+            for(String message : chatMessages)
             {
-                lastTextFound = true;
-            }
-            else if(lastTextFound)
-            {
-                count++;
+                System.out.println(lastText);
+                System.out.println(message);
+                if(message.equals(lastText))
+                {
+                    lastTextFound = true;
+                }
+                else if(lastTextFound)
+                {
+                    count++;
+                }
             }
         }
+
 
         System.out.println(count + " COUNT!");
 
@@ -159,7 +162,9 @@ public class ChatBrowseAdapter extends RecyclerView.Adapter<ChatBrowseHolder> {
                 holder.chatTitle.setText(title[0]);
                 holder.username.setText(username);
                 List<String> replies = (List<String>)documentSnapshot.getData().get("replies");
-                holder.latestMessage.setText(replies.get(replies.size()-1).substring(2));
+
+                if(replies != null)
+                    holder.latestMessage.setText(replies.get(replies.size()-1).substring(2));
                 Picasso.get().load(documentSnapshot1.get("picture-url").toString()).into(holder.chatImage);
             }
         });

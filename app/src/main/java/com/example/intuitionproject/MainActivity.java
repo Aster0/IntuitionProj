@@ -119,8 +119,8 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void login(String email, String password) {
-        if (!email.isEmpty() && !password.isEmpty() && !Patterns.EMAIL_ADDRESS.matcher(email.toString()).matches()) {
+    private void login(String email, String password){
+        if (!email.isEmpty() && !password.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(email.toString()).matches()) {
             mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {

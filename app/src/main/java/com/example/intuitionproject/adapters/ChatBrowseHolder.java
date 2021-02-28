@@ -15,7 +15,7 @@ import com.google.android.material.textview.MaterialTextView;
 
 public class ChatBrowseHolder extends RecyclerView.ViewHolder {
 
-    public final TextView chatTitle;
+    public final TextView chatTitle, unreadText;
     public final TextView username;
     public final MaterialTextView latestMessage;
     public final ImageView chatImage;
@@ -35,6 +35,7 @@ public class ChatBrowseHolder extends RecyclerView.ViewHolder {
         chatImage = itemView.findViewById(R.id.image_message_profile);
         constraintLayout = itemView.findViewById(R.id.chat);
         latestMessage = itemView.findViewById(R.id.latest_msg);
+        unreadText = itemView.findViewById(R.id.unread);
         context = itemView.getContext();
 
         setListener();

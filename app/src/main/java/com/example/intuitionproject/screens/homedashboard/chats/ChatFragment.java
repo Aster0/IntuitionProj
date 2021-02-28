@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.intuitionproject.R;
 import com.example.intuitionproject.adapters.ChatBrowseAdapter;
@@ -82,6 +83,8 @@ public class ChatFragment extends Fragment {
                                         System.out.println(documentSnapshot1);
                                         ChatBrowseAdapter.getChats().add(documentSnapshot1);
                                         buildRecycledView();
+
+
 
                                     }
                                 }

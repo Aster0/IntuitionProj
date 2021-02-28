@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -73,13 +74,66 @@ public class ChatBrowseAdapter extends RecyclerView.Adapter<ChatBrowseHolder> {
             public void onClick(View v) {
                 String chatID = documentSnapshot.getId();
 
+                holder.unreadText.setText("0");
+
                 Intent intent = new Intent(holder.context, ChatScreen.class);
                 System.out.println(chatID);
                 intent.putExtra("id", chatID);
 
+
                 holder.context.startActivity(intent);
             }
         });
+
+        System.out.println(documentSnapshot);
+        System.out.println("AAAA");
+
+        String lastText = null;
+        List<String> chatMessages = (List<String>) documentSnapshot.get("replies");
+        boolean lastTextFound = false;
+        int count = 0;
+
+        try
+        {
+            if(documentSnapshot.get("username").equals(FirebaseAuth.getInstance().getCurrentUser().getEmail()))
+            {
+                lastText = documentSnapshot.get("sender_last_text").toString();
+            }
+            else
+                lastText = documentSnapshot.get("requester_last_text").toString();
+
+
+
+
+
+
+
+        }
+        catch (NullPointerException e) { lastTextFound = true; }
+
+
+        for(String message : chatMessages)
+        {
+            System.out.println(lastText);
+            System.out.println(message);
+            if(message.equals(lastText))
+            {
+                lastTextFound = true;
+            }
+            else if(lastTextFound)
+            {
+                count++;
+            }
+        }
+
+        System.out.println(count + " COUNT!");
+
+        String unread = String.valueOf(count);
+        if(count > 9)
+            unread = "9+";
+        holder.unreadText.setText(unread);
+
+
 
         final String[] title = new String[1];
         String username = null;
